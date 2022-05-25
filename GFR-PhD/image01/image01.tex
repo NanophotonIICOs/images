@@ -1,0 +1,35 @@
+
+\documentclass{article}
+\usepackage[paperwidth = 8cm, 
+            paperheight = 5cm, 
+            textwidth = 8cm,
+            textheight = 5cm,
+            centering]{geometry}
+\usepackage{pgfplotstable}
+\usepackage{amsmath,bm}
+\usepackage{tikz}
+\usetikzlibrary{arrows,
+	arrows.meta,
+	decorations.pathmorphing,
+	calc,%
+	decorations.pathmorphing,%
+	decorations.markings,
+	fadings,%
+	shadings,%
+	positioning,
+	spy,
+	shapes,
+	shapes.geometric,
+	shapes.arrows,
+	fit,	plotmarks,}
+\usepackage{tikz-dimline}
+
+
+\begin{document}
+\thispagestyle{empty}
+\begin{tikzpicture}[overlay,remember picture,]
+\filldraw[gray,draw](1,-2.5)--++(0,-1)--++(3,-0.5)--++(2,2)--++(0,1)--++(-2,-2)--++(-3,0.5);
+
+\draw(1,-2.5)--++(2,2)--++(3,-0.5);
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,22 @@
+\documentclass[border=0pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsfonts}
+\usepackage{grid-guide}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric} % Cylinder
+\usetikzlibrary{shadows.blur,arrows.meta,bending,positioning}
+\usetikzlibrary{%
+	calc,%
+	decorations.pathmorphing,%
+	fadings,%
+	shadings,
+   decorations.pathreplacing,calligraphy
+}
+
+\begin{document}
+  \begin{tikzpicture}
+     \draw[labeled grid](0,0) to (5,7);    
+
+     \draw(0,0)--(3,6);
+  \end{tikzpicture}
+\end{document}

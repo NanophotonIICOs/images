@@ -69,32 +69,32 @@
 
 \begin{tikzpicture}
   \path[mindmap,concept color=orange,font=\fontsize{17}{5}\selectfont,text=white]
-  node[concept] {Grafeno}
+  node[concept] {Graphene properties}
   [clockwise from=0]
   child[concept color=green!50!black,font=\fontsize{13}{5}\selectfont] {
-    node[concept] {Magnéticas}
+    node[concept] {Magnetic}
     [clockwise from=90]
-    child { node[concept] {algorithms} }
+    child { node[concept] {Spintronics} }
     %			child { node[concept] {data structures} }
     %			child { node[concept] {pro\-gramming languages} }
   }  
   child[concept color=blue,font=\fontsize{13}{5}\selectfont] {
-    node[concept] {Eléctricas}
+    node[concept] {Electric}
     [clockwise from=30]
-    child { node[concept] {Movilidad eléctrica del grafeno es del orden de 10$\times10^3 cm^2/V s$} }
-    child { node[concept] {Se puede cambiar el Nivel de Fermi con dopaje } }
+    child { node[concept] {Electric mobility around of $\times10^3 cm^2/V s$} }
+    child { node[concept] {Fermi level control by dopped. } }
   }
   child[concept color=purple,font=\fontsize{13}{5}\selectfont] {
-    node[concept] {Ópticas}
+    node[concept] {Optical}
     [clockwise from=-30]
     child { node[concept] { $\phi \alpha \sim 2.3 \%$} }
-    child { node[concept] {Absorbe $2.3\%$ de la luz blanca } }
+    child { node[concept] {Ligth absorption $2.3\%$} }
   }
   child[concept color=red,font=\fontsize{13}{5}\selectfont] { 
-    node[concept] {Mecánicas} 
+    node[concept] {Mechanical} 
     [clockwise from=-48]
-    child { node[concept] {Material mas fuerte encontrado} }
-    child { node[concept] {Material muy ligero} }
+    child { node[concept] {Strongest material} }
+    child { node[concept] {Lighter material} }
   }
   ;
 

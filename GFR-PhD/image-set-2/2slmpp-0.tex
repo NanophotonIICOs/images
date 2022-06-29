@@ -1,0 +1,71 @@
+\documentclass{standalone}
+\usepackage{tikz,pgfplots}
+\usepgfplotslibrary{patchplots}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.10}
+\pgfkeys{/pgf/plot/gnuplot call={cd build-ruco && gnuplot}}
+
+
+\def\xi{50}
+\def\xf{200}
+\def\yi{200}
+\def\yf{200}
+
+
+\begin{document}
+    \begin{tikzpicture}
+
+		\pgfplotsset{
+		height=10cm,
+		width= 5cm,
+		scale only axis,
+		every axis/.append style = {
+			line width = 1pt,
+			tick style = {line width=0.1mm,black},
+			every tick label/.append style={scale=1},
+			major tick length = 2mm,
+			minor tick length = 1mm,
+			%axis line style = thick,
+		},
+		every axis plot/.append style={
+			mark options={scale=0.5,fill=white,line width=0.45pt},
+			line width=1},
+			%xtick align=outside,
+			%ytick align=outside,
+	}
+        \begin{groupplot}[group style={
+			group name=im,
+			group size=2 by 2},
+			height=7cm,width=7cm]
+            \nextgroupplot[enlargelimits=false, axis on top, axis equal image]
+            %  \addplot3[surf, shader=interp, mesh/rows=50] file {data/image-2slmpp-a1.txt};
+			\addplot[thick,white] graphics[xmin=0,ymin=0,xmax=512,ymax=512] {gnuplot-out/image-2slmpp-a1.pdf};
+			% \addplot[mark=*] coordinates {(15,22)} ;
+\draw[line width=0.3mm,white] (\xi,\yi) rectangle ++(\xf,\yf);
+
+\coordinate (c1) at (\xi,\yi);
+\coordinate (c2) at (\xi+\xf,\yi+\yf);
+		\nextgroupplot
+		\foreach \x in {1,2,3}{
+			\addplot table[col sep=comma,x index=0,y index=\x] {data/lines-2slmpp-p1.txt};
+		}
+    	%\addplot graphics[xmin=0,ymin=0,xmax=511,ymax=511] {gnuplot-out/image-2slmpp-a1.pdf};
+        \end{groupplot}
+
+
+		\begin{axis}[view={0}{90},
+			at={(im c1r1.south east)}, % position
+			name=im2,
+			anchor=south east, % anchor
+			scale only axis, 
+			width=3cm,height=3cm,
+			ticks=none
+			]
+			\addplot3[surf, shader=interp, mesh/rows=50] file {data/image-2slmpp-p1.txt};
+			\addplot[mark=*,mark options={scale=1.2}] coordinates {(15,33) (22,26)};
+
+		\end{axis}
+		\draw[dashed,white] (c1)--(im2.south west);
+		\draw[dashed,white] (c2)--(im2.north east);
+    \end{tikzpicture}
+\end{document}

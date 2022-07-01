@@ -6,7 +6,6 @@ unset border
 unset colorbox
 set auto fix
 set size square
-#set palette gray 
 set lmargin 0
 set rmargin 0
 set tmargin 0

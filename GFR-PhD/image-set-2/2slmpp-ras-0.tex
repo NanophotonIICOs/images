@@ -70,6 +70,7 @@
 		xmin=2.5,xmax=5,
 		%ymin=2400,ymax=6000,
 		xlabel={Photon Energy (eV)},
+        ylabel={RAS},
 		cycle list name = fycle,]
 		\foreach \x in {1,...,4}{
 			\addplot+[mark=none,smooth] table[col sep=comma,x index=0,y index=\x] {data/lines-2slmpp-p1-ras.txt};

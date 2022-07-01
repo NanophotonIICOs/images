@@ -60,7 +60,7 @@
 			ymin=0,ymax=511
 			]
             %  \addplot3[surf, shader=interp, mesh/rows=50] file {data/image-2slmpp-a1.txt};
-			\addplot[thick,white] graphics[xmin=0,ymin=0,xmax=511,ymax=511] {gnuplot-out/image-2slmpp-a1.pdf};
+			\addplot[thick,white] graphics[xmin=0,ymin=0,xmax=511,ymax=511] {gnuplot-out/image-2slmpp-a1-r.pdf};
 			% \addplot[mark=*] coordinates {(15,22)} ;
 \draw[yellow,line width=1pt] (\xi,\yi) rectangle ++(\xf,\yf);
 
@@ -72,7 +72,7 @@
 		xlabel={Photon Energy (eV)},
 		cycle list name = fycle,]
 		\foreach \x in {1,...,4}{
-			\addplot+[mark=none,smooth] table[col sep=comma,x index=0,y index=\x] {data/lines-2slmpp-p1.txt};
+			\addplot+[mark=none,smooth] table[col sep=comma,x index=0,y index=\x] {data/lines-2slmpp-p1-r.txt};
 		}
     	%\addplot graphics[xmin=0,ymin=0,xmax=511,ymax=511] {gnuplot-out/image-2slmpp-a1.pdf};
         \end{groupplot}
@@ -99,7 +99,7 @@
 			}{
 			\addplot+[mark=square,mark options={scale=1,line width=1pt,}] coordinates {\cc};
 			}
-			\addplot[thick,white,opacity=0.9] graphics[xmin=0,ymin=0,xmax=\xpix,ymax=\ypix] {gnuplot-out/image-2slmpp-b1.pdf};
+			\addplot[thick,white,opacity=0.9] graphics[xmin=0,ymin=0,xmax=\xpix,ymax=\ypix] {gnuplot-out/image-2slmpp-b1-r.pdf};
 
 % (12,11),
 % (13,12),
@@ -115,3 +115,5 @@
 		\draw[dashed,yellow,line width=1pt] (c2)--(im2.south west);
     \end{tikzpicture}
 \end{document}
+
+

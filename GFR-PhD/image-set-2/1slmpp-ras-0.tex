@@ -7,10 +7,10 @@
 \usepgfplotslibrary{colorbrewer}
 \usepackage{xcolor}
 
-\def\xi{80}
-\def\xf{80}
-\def\yi{257}
-\def\yf{80}
+\def\xi{270}
+\def\xf{100}
+\def\yi{230}
+\def\yf{100}
 
 
 \pgfplotsset{
@@ -56,41 +56,41 @@
 			group size=2 by 2},
 			height=7cm,width=7cm]
             \nextgroupplot[enlargelimits=false, axis on top, axis equal image,
-			xmin=0,xmax=511,
-			ymin=0,ymax=511
+			xmin=0,xmax=512,
+			ymin=0,ymax=512
 			]
             %  \addplot3[surf, shader=interp, mesh/rows=50] file {data/image-2slmpp-a1.txt};
-			\addplot[thick,white] graphics[xmin=0,ymin=0,xmax=511,ymax=511] {gnuplot-out/image-2slmpp-a1-ras.pdf};
+\addplot[thick,white] graphics[xmin=0,ymin=0,xmax=511,ymax=511] {data/image-1slmpp-a1-ras.pdf};
 			% \addplot[mark=*] coordinates {(15,22)} ;
 \draw[yellow,line width=1pt] (\xi,\yi) rectangle ++(\xf,\yf);
 
-\coordinate (c2) at (\xi,\yi);
-\coordinate (c1) at (\xi+\xf,\yi+\yf);
-		\nextgroupplot[xtick pos=left,ytick=\empty,
-		xmin=2.5,xmax=5,
+\coordinate (c1) at (\xi,\yi+\yf);
+\coordinate (c2) at (\xi+\xf,\yi);
+\nextgroupplot[xtick pos=left,ytick=\empty,
+		xmin=2,xmax=3.5,
 		%ymin=2400,ymax=6000,
 		xlabel={Photon Energy (eV)},
         ylabel={RAS},
 		cycle list name = fycle,]
-		\foreach \x in {1,...,4}{
-			\addplot+[mark=none,smooth] table[col sep=comma,x index=0,y index=\x] {data/lines-2slmpp-p1-ras.txt};
-		}
+\foreach \x in {1,...,4}{
+\addplot+[mark=none,smooth] table[col sep=comma,x index=0,y index=\x] {data/lines-1slmpp-p1-ras.txt};
+}
 
-        \draw(axis cs:4.25,-0.04) rectangle (axis cs:4.5,0.04);
+        %\draw(axis cs:2.15,-0.007) rectangle (axis cs:2.5,0.012);
 
-        \coordinate (r1) at (axis cs:4.5,-0.04);
-        \coordinate (r2) at (axis cs:4.25,0.04);
+        \coordinate (r1) at (axis cs:4.5,-2e-4);
+        \coordinate (r2) at (axis cs:4.25,2e-4);
     	%\addplot graphics[xmin=0,ymin=0,xmax=511,ymax=511] {gnuplot-out/image-2slmpp-a1.pdf};
         \end{groupplot}
 
 		\def\xpix{19}
 		\def\ypix{19}
-		\begin{axis}[view={0}{90},
-			at={(im c1r1.south east)}, % position
+\begin{axis}[
+			at={(im c1r1.south west)}, % position
 			name=im2,
-			anchor=south east, % anchor
+			anchor=south west, % anchor
 			scale only axis, 
-			width=3.5cm,height=3.5cm,
+			width=3cm,height=3cm,
 			ticks=none,
 			xmin=0,xmax=\ypix,
 			ymin=0,ymax=\ypix,
@@ -98,36 +98,37 @@
 			cycle list name = fycle,
 			]
 			\foreach \cc in  {
-				(12,11),
-				(13,12),
-				(14,13),
-				(15,14),
+				(3,4),
+(4,5),
+(5,6),
+(6,7),
 			}{
-			\addplot+[mark=square,mark options={scale=1,line width=1pt,}] coordinates {\cc};
+\addplot+[mark=square,mark options={scale=1,line width=1pt,}] coordinates {\cc};
 			}
-			\addplot[thick,white,opacity=0.9] graphics[xmin=0,ymin=0,xmax=\xpix,ymax=\ypix] {gnuplot-out/image-2slmpp-b1-ras.pdf};
+\addplot[thick,white,opacity=0.9] graphics[xmin=0,ymin=0,xmax=\xpix,ymax=\ypix] {data/image-1slmpp-b1-r.pdf};
 
 		\end{axis}
-		\draw[dashed,yellow,line width=1pt] (c1)--(im2.north east);
-		\draw[dashed,yellow,line width=1pt] (c2)--(im2.south west);
+		\draw[dashed,yellow,line width=1pt] (c1)--(im2.north west);
+		\draw[dashed,yellow,line width=1pt] (c2)--(im2.south east);
 
-        \begin{axis}[
-			at={(im c2r1.south west)}, % position
-			name=im3,
-			anchor=south west, % anchor
-			scale only axis, 
-			width=3.5cm,height=3.5cm,
-			ticks=none,
-			cycle list name = fycle,
-            xmin=4.25,xmax=4.5,
-            ytick style={draw=none},
-            xtick style={draw=none},
-			]
-            \foreach \x in {1,...,4}{
-                \addplot+[mark=none,smooth] table[col sep=comma,x index=0,y index=\x] {data/lines-2slmpp-p1-ras.txt};
-            }
-		\end{axis}
-        \draw[dashed,line width=1pt] (r2)--(im3.north west);
-		\draw[dashed,line width=1pt] (r1)--(im3.south east);
+        % \begin{axis}[
+		% 	at={(im c2r1.south west)}, % position
+		% 	name=im3,
+		% 	anchor=south west, % anchor
+		% 	scale only axis, 
+		% 	width=3.5cm,height=3.5cm,
+		% 	ticks=none,
+		% 	cycle list name = fycle,
+        %     xmin=4.25,xmax=4.5,
+        %     ytick style={draw=none},
+        %     xtick style={draw=none},
+		% 	]
+        %     \foreach \x in {1,...,4}{
+        %         \addplot+[mark=none,smooth] table[col sep=comma,x index=0,y index=\x] {data/lines-1slmpp-p1-ras.txt};
+        %     }
+		% \end{axis}
+        % \draw[dashed,line width=1pt] (r2)--(im3.north west);
+		% \draw[dashed,line width=1pt] (r1)--(im3.south east);
     \end{tikzpicture}
 \end{document}
+

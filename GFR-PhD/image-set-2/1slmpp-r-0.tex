@@ -1,0 +1,134 @@
+\documentclass{standalone}
+\usepackage{tikz,pgfplots}
+\usepgfplotslibrary{patchplots}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.17}
+\pgfkeys{/pgf/plot/gnuplot call={cd build-ruco && gnuplot}}
+\usepgfplotslibrary{colorbrewer}
+\usepackage{xcolor}
+
+\def\xi{270}
+\def\xf{100}
+\def\yi{230}
+\def\yf{100}
+
+
+\pgfplotsset{
+		height=10cm,
+		width= 5cm,
+		scale only axis,
+		ticklabel style={scale=1},
+		xtick pos=left,
+		ytick pos=left,
+		minor tick num=1,
+		every axis/.append style = {
+			line width = 1pt,
+			tick style = {line width=0.3mm,black},
+			every tick label/.append style={scale=1},
+			major tick length = 2mm,
+			minor tick length = 1mm,
+			%axis line style = thick,
+		},
+		every axis plot/.append style={mark=none,line width=1pt},
+			%xtick align=outside,
+			%ytick align=outside,
+		% cycle from colormap manual style/.style={
+		% 		every axis plot/.style={smooth,mark=*,mark options={scale=0.5,fill=white,line width=0.5pt},line width=0.5pt},
+		% 		},
+	}
+	\pgfplotscreateplotcyclelist{fycle}{%  %<------
+    {blue}, %<------
+    {orange},%<------
+    {red},%<------
+    {green},%<------
+}%
+\pgfplotscreateplotcyclelist{fycle2}{%  %<------
+{blue}, %<------
+{orange},%<------
+{red},%<------
+{green},%<------
+}%
+
+\begin{document}
+    \begin{tikzpicture}
+        \begin{groupplot}[group style={
+			group name=im,
+			group size=2 by 2},
+			height=7cm,width=7cm]
+            \nextgroupplot[enlargelimits=false, axis on top, axis equal image,
+			xmin=0,xmax=511,
+			ymin=0,ymax=511
+			]
+            %  \addplot3[surf, shader=interp, mesh/rows=50] file {data/image-2slmpp-a1.txt};
+\addplot[thick,white] graphics[xmin=0,ymin=0,xmax=511,ymax=511] {data/image-1slmpp-a1-r.pdf};
+			% \addplot[mark=*] coordinates {(15,22)} ;
+\draw[yellow,line width=1pt] (\xi,\yi) rectangle ++(\xf,\yf);
+
+\coordinate (c1) at (\xi,\yi+\yf);
+\coordinate (c2) at (\xi+\xf,\yi);
+\nextgroupplot[xtick pos=left,ytick=\empty,
+		xmin=2,xmax=3.55,
+		%ymin=2400,ymax=6000,
+		xlabel={Photon Energy (eV)},
+        ylabel={RAS},
+		cycle list name = fycle,]
+\foreach \x in {1,...,4}{
+\addplot+[mark=none,smooth] table[col sep=comma,x index=0,y index=\x] {data/lines-1slmpp-p1-r.txt};
+}
+
+        \draw(axis cs:4.25,-0.04) rectangle (axis cs:4.5,0.04);
+
+        \coordinate (r1) at (axis cs:4.5,-0.04);
+        \coordinate (r2) at (axis cs:4.25,0.04);
+    	%\addplot graphics[xmin=0,ymin=0,xmax=511,ymax=511] {gnuplot-out/image-2slmpp-a1.pdf};
+        \end{groupplot}
+
+		\def\xpix{19}
+		\def\ypix{19}
+\begin{axis}[
+			at={(im c1r1.south west)}, % position
+			name=im2,
+			anchor=south west, % anchor
+			scale only axis, 
+			width=3cm,height=3cm,
+			ticks=none,
+			xmin=0,xmax=\ypix,
+			ymin=0,ymax=\ypix,
+			axis line style={yellow,line width=1pt},
+			cycle list name = fycle,
+			]
+			\foreach \cc in  {
+				(3,4),
+(4,5),
+(5,6),
+(6,7),
+			}{
+\addplot+[mark=square,mark options={scale=1,line width=1pt,}] coordinates {\cc};
+			}
+\addplot[thick,white,opacity=0.9] graphics[xmin=0,ymin=0,xmax=\xpix,ymax=\ypix] {data/image-1slmpp-b1-r.pdf};
+
+		\end{axis}
+		\draw[dashed,yellow,line width=1pt] (c1)--(im2.north west);
+		\draw[dashed,yellow,line width=1pt] (c2)--(im2.south east);
+
+        % \begin{axis}[
+		% 	at={(im c2r1.south west)}, % position
+		% 	name=im3,
+		% 	anchor=south west, % anchor
+		% 	scale only axis, 
+		% 	width=3.5cm,height=3.5cm,
+		% 	ticks=none,
+		% 	cycle list name = fycle,
+        %     xmin=4.25,xmax=4.5,
+        %     ytick style={draw=none},
+        %     xtick style={draw=none},
+		% 	]
+        %     \foreach \x in {1,...,4}{
+        %         \addplot+[mark=none,smooth] table[col sep=comma,x index=0,y index=\x] {data/lines-2slmpp-p1-ras.txt};
+        %     }
+		% \end{axis}
+        % \draw[dashed,line width=1pt] (r2)--(im3.north west);
+		% \draw[dashed,line width=1pt] (r1)--(im3.south east);
+    \end{tikzpicture}
+\end{document}
+

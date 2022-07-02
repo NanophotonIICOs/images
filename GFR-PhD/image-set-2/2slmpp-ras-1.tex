@@ -1,0 +1,135 @@
+\documentclass{standalone}
+\usepackage{tikz,pgfplots}
+\usepgfplotslibrary{patchplots}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.17}
+\pgfkeys{/pgf/plot/gnuplot call={cd build-ruco && gnuplot}}
+\usepgfplotslibrary{colorbrewer}
+\usepackage{xcolor}
+
+
+
+
+\pgfplotsset{
+		height=10cm,
+		width= 5cm,
+		scale only axis,
+		ticklabel style={scale=1},
+		xtick pos=left,
+		ytick pos=left,
+		minor tick num=1,
+		every axis/.append style = {
+			line width = 1pt,
+			tick style = {line width=0.3mm,black},
+			every tick label/.append style={scale=1},
+			major tick length = 2mm,
+			minor tick length = 1mm,
+			%axis line style = thick,
+		},
+		every axis plot/.append style={mark=none,line width=1pt},
+			%xtick align=outside,
+			%ytick align=outside,
+		% cycle from colormap manual style/.style={
+		% 		every axis plot/.style={smooth,mark=*,mark options={scale=0.5,fill=white,line width=0.5pt},line width=0.5pt},
+		% 		},
+        cycle list/Set1
+	}
+    % \pgfplotscreateplotcyclelist{my color cycle list}{
+    %     [of colormap=Dark2]
+    % }
+
+\def\xi{300}
+\def\xf{80}
+\def\yi{360}
+\def\yf{80}
+
+
+\def\lmin{2.5}
+\def\lmax{5.0}
+
+\def\zxi{3.63}
+\def\zyi{-1.35e-2}
+\def\zxf{3.90}
+\def\zyf{1.8e-2}
+
+\begin{document}
+    \begin{tikzpicture}
+        \begin{groupplot}[group style={
+			group name=im,
+			group size=2 by 2},
+			height=7cm,width=7cm]
+            \nextgroupplot[enlargelimits=false, axis on top, axis equal image,
+			xmin=0,xmax=511,
+			ymin=0,ymax=511
+			]
+            %  \addplot3[surf, shader=interp, mesh/rows=50] file {data/image-2slmpp-a1.txt};
+\addplot[thick,white] graphics[xmin=0,ymin=0,xmax=511,ymax=511] {data/image-2slmpp-a2-ras.pdf};
+			% \addplot[mark=*] coordinates {(15,22)} ;
+\draw[yellow,line width=1pt] (\xi,\yi) rectangle ++(\xf,\yf);
+
+\coordinate (c1) at (\xi,\yi+\yf);
+\coordinate (c2) at (\xi+\xf,\yi);
+\nextgroupplot[xtick pos=left,ytick=\empty,
+		xmin=\lmin,
+        xmax=\lmax,
+		%ymin=2400,ymax=6000,
+		xlabel={Photon Energy (eV)},
+        ylabel={REFLECTANCE}]
+\foreach \x in {1,...,4}{
+\addplot+[mark=none,smooth] table[col sep=comma,x index=0,y index=\x] {data/lines-2slmpp-p2-ras.txt};
+}
+
+\draw(axis cs:\zxi,\zyi) rectangle  (axis cs:\zxf,\zyf);
+
+        \coordinate (r1) at (axis cs:\zxi,\zyf);
+        \coordinate (r2) at (axis cs:\zxf,\zyi);
+    	%\addplot graphics[xmin=0,ymin=0,xmax=511,ymax=511] {gnuplot-out/image-2slmpp-a1.pdf};
+        \end{groupplot}
+
+		\def\xpix{19}
+		\def\ypix{19}
+\begin{axis}[
+			at={(im c1r1.south west)}, % position
+			name=im2,
+			anchor=south west, % anchor
+			scale only axis, 
+			width=3cm,height=3cm,
+			ticks=none,
+			xmin=0,xmax=\ypix,
+			ymin=0,ymax=\ypix,
+			axis line style={yellow,line width=1pt},
+			]
+			\foreach \cc in  {
+				(8,15),
+(9,16),
+(10,17),
+(11,18),
+			}{
+\addplot+[mark=square,mark options={scale=1,line width=1pt,}] coordinates {\cc};
+			}
+\addplot[thick,white,opacity=0.9] graphics[xmin=0,ymin=0,xmax=\xpix,ymax=\ypix] {data/image-2slmpp-b2-ras.pdf};
+
+		\end{axis}
+		\draw[dashed,yellow,line width=1pt] (c1)--(im2.north west);
+		\draw[dashed,yellow,line width=1pt] (c2)--(im2.south east);
+
+        \begin{axis}[
+			at={(im c2r1.north east)}, % position
+			name=im3,
+			anchor=north east, % anchor
+			scale only axis, 
+			width=2.25cm,height=3cm,
+			ticks=none,
+            xmin=\zxi,xmax=\zxf,
+            ytick style={draw=none},
+            xtick style={draw=none},
+			]
+            \foreach \x in {1,...,4}{
+                \addplot+[mark=none,smooth] table[col sep=comma,x index=0,y index=\x] {data/lines-2slmpp-p2-ras.txt};
+            }
+		\end{axis}
+        \draw[dashed,line width=1pt] (r2)--(im3.south east);
+		\draw[dashed,line width=1pt] (r1)--(im3.north west);
+    \end{tikzpicture}
+\end{document}
+

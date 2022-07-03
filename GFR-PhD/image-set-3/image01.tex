@@ -1,0 +1,140 @@
+\documentclass[margin=0mm]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{graphics}
+\usepackage{tikz,filecontents, pgfplots,pgfplotstable}
+\usetikzlibrary{calc,arrows,arrows.meta,shapes,shadows,shapes.arrows,spy,angles,animations,backgrounds,decorations,patterns,babel,bending}
+\usepackage{amsmath}
+\usepgfplotslibrary{units,fillbetween,groupplots,colorbrewer,colormaps}
+\usetikzlibrary{pgfplots.colorbrewer}
+
+\pgfplotsset{compat=newest,
+	every axis/.style = {
+		scale only axis,
+		width=5cm,height=7cm,
+		line width = 0.7pt,
+		tick style = {line width=0.7pt,black},
+		ticklabel style={scale=0.8},
+		major tick length = 1.5mm,
+		minor tick length = 0.75mm,
+		xtick pos=left,
+		ytick pos=left,
+		minor x tick num=1,
+		minor y tick num=1,
+		xlabel style={scale=1},
+		ylabel style={scale=1},
+		xlabel={Wavelength (nm)}, 
+	   	xticklabel style={
+	   	/pgf/number format/precision=0,
+	   	/pgf/number format/fixed,
+	   	/pgf/number format/fixed zerofill,
+	   },
+	   yticklabel style={
+	   	/pgf/number format/precision=3,
+	   	/pgf/number format/fixed,
+	   	/pgf/number format/fixed zerofill,
+	   },
+	},
+	every axis plot/.style={smooth,mark=*,mark options={scale=0.5,fill=white,line width=0.5pt},line width=0.5pt},
+	% /pgfplots/legend image code/.code={%
+	% 	\draw[mark repeat=1,mark phase=1,#1] 
+	% 	plot coordinates {
+	% 		(0cm,0cm) 
+	% 		(0.0cm,0cm)
+	% 		(0.0cm,0cm)
+	% 		(0.0cm,0cm)
+	% 		(0.3cm,0cm)%
+	% 	};
+	% },
+}
+
+\pgfplotsset{every axis legend/.style={
+		cells={anchor=center},
+		inner xsep=1pt,
+		inner ysep=1pt,
+		nodes={scale=0.8,inner sep=2pt, transform shape},
+		draw=none,
+		at={(1,0.5)},
+		anchor=north east,
+	}
+}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+name = rd1,
+ymin=0, ymax=0.300,
+xmin=230,   xmax=700,
+minor x tick num=4,
+xtick = {200,300,400,500,600,700},
+ytick = {0.000,0.025,0.050,0.075,0.100,0.125,0.150,0.175,0.200,0.225,0.250,0.275,0.300,0.325},
+minor y tick num=1,
+xtick pos=left,
+ytick pos=left,
+%=========================== Labels ================================
+xlabel ={Wavelength (nm)},
+ylabel ={DRC},
+every axis y label/.style= {at={(axis description cs:-0.2,0.5)},rotate=90},
+every y tick scale label/.style={at={(axis description cs:-0.2025,0.58)},
+	rotate=90,s
+	inner sep=0pt},
+% cycle list={[colors of colormap={0,300,600,900,12000,14000}]},
+% cycle list/Spectral
+colormap/jet,
+point meta min=0.018,
+point meta max=0.090,
+]
+
+%================================= Add Data ===================================
+\pgfplotstableread[col sep=tab]{/media/labfiles/Gabriela-FR/Experimentos/Graphene/DRC/DRR1.dat}{\rd};
+\pgfplotstableread[col sep=tab]{/media/labfiles/Gabriela-FR/Experimentos/Graphene/DRC/DRR2.dat}{\rdd};
+\pgfplotstableread[col sep=tab]{/media/labfiles/Gabriela-FR/Experimentos/Graphene/DRC/DRR3.dat}{\rddd};
+\pgfplotstableread[col sep=tab]{/media/labfiles/Gabriela-FR/Experimentos/Graphene/DRC/DRR4.dat}{\rdddd};
+\pgfplotstableread[col sep=tab]{/media/labfiles/Gabriela-FR/Experimentos/Graphene/DRC/DRR5.dat}{\rddddd};
+
+%=================================== Plot ======================================
+\addplot+[scatter,mark=*,only marks,scatter src=\thisrow{1}] table[x index=0,y index=1]{\rd};
+\addplot+[scatter,mark=*,only marks,scatter src=\thisrow{1}] table[x index=0,y index=1]{\rdd};
+\addplot+[scatter,mark=*,only marks,scatter src=\thisrow{1}] table[x index=0,y index=1]{\rddd};
+\addplot+[scatter,mark=*,only marks,scatter src=\thisrow{1}] table[x index=0,y index=1]{\rdddd};
+\addplot+[scatter,mark=*,only marks,scatter src=\thisrow{1}] table[x index=0,y index=1]{\rddddd};
+
+\draw[red,dashed] (axis cs:532,0)--(axis cs:532,0.100);
+\draw[-{Stealth},red] (axis cs:532,0.125)--(axis cs:532,0.100);
+\node[red,scale=0.7] at (axis cs:532,0.133) {$\lambda=532$(nm)};
+\draw[decorate,decoration={brace,amplitude=3pt,mirror},red] (axis cs:420,0.151)--(axis cs:640,0.151);
+
+		\coordinate (insetPosition) at (axis cs:520,0.200);
+\end{axis} 	
+\begin{axis}[
+at ={(insetPosition)},
+anchor= center,
+%xshift=1.85cm,yshift=3.5cm,
+height=2cm,
+width=2cm,
+ymin=0.000, ymax=0.1,
+xmin=0.5,   xmax=5.5,
+minor x tick num=0,
+xtick = {1,2,3,4,5},
+ytick = {0.000,0.01839,0.03591,0.05377,0.072,0.0898},
+yticklabel style = {scale=0.8},
+xticklabel style = {scale=0.8},
+xlabel ={m},
+ytick=\empty,
+xtick pos=top,
+colormap/jet,
+colorbar,
+point meta min=0.018,
+point meta max=0.090,
+colorbar style={ 
+	height= 2 cm,width=0.25cm, 
+	ytick={0.000,0.01839,0.03591,0.05377,0.072,0.0898},scaled ticks=false,
+	yticklabel style = {scale=0.8},
+at={(1,1)},},
+]
+\pgfplotstableread[col sep=tab]{/media/labfiles/Gabriela-FR/Experimentos/Graphene/DRC/COMP01.dat}{\grap};
+\addplot+[scatter,mark=*,mark options={scale=1},scatter src=\thisrow{1}] table[x index=0,y index=1]{\grap};
+  %small plot
+ \end{axis}
+\end{tikzpicture}
+
+\end{document}

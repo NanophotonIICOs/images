@@ -67,7 +67,7 @@
 }
 
 
-\pgfplotstableread[col sep=comma]{/media/labfiles/Gabriela-FR/Experimentos/PCdte/CdZnTe/RD_CdZnTe.dat}{\rd}
+\pgfplotstableread[col sep=comma]{/media/labfiles/Gabriela-FR/Experimentos/PCdte/HgCdTe/RD_HgCdTe.dat}{\rd}
 
 \begin{document}
 \begin{tikzpicture}
@@ -90,12 +90,12 @@ every axis legend/.style={
 
 
 \addplot[color=Set1-B] table[x index=0,y expr=\thisrow{3}]{\rd};
-\addlegendentry{CdZnTe RAS}
+\addlegendentry{HgCdTe RAS}
 
 \def\sc{0.8}
-\lbl{3.2}{3e-3}{2.25e-3}{$E_{1}$}{3}{\sc}{black}
+\lbl{3.2}{2e-3}{3e-3}{$E_{1}$}{3}{\sc}{black}
 
-\lbl{4.0}{1.4e-3}{2e-3}{$E_{1}+\Delta_{1}$}{-2}{\sc}{black}
+\lbl{4.0}{0e-3}{1e-3}{$E_{1}+\Delta_{1}$}{-2}{\sc}{black}
 
 \dimline[label style = {rotate=-90,midway,xshift=1mm,scale=0.7},
 line style = {line width=0.5pt,arrows={Stealth[scale=1]}-{Stealth[scale=1]}},

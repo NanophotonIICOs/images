@@ -12,19 +12,21 @@
 	every axis/.style = {
 		scale only axis,
 		width=7cm,height=10cm,
-		line width = 0.7pt,
-		tick style = {line width=0.7pt,black},
+		line width = 1pt,
+		tick style = {line width=1pt,black},
 		ticklabel style={scale=0.8},
-		major tick length = 1.5mm,
-		minor tick length = 0.75mm,
+		major tick length = 2mm,
+		minor tick length = 1mm,
 		xtick pos=left,
 		ytick pos=left,
 		minor x tick num=1,
 		minor y tick num=1,
-		xlabel style={scale=0.9},
-		ylabel style={scale=0.9},
-		zlabel style={scale=0.9},
+		xlabel style={scale=1},
+		ylabel style={scale=1},
+		zlabel style={scale=1},
 		xlabel={Photon energy (eV)}, 
+        xmin=2.0,
+        xmax=6.0,
 	   	xticklabel style={
 	   	/pgf/number format/precision=1,
 	   	/pgf/number format/fixed,
@@ -44,7 +46,7 @@
 			(0.0cm,0cm)
 			(0.0cm,0cm)
 			(0.0cm,0cm)
-			(0.3cm,0cm)%
+			(0.4cm,0cm)%
 		};
 	},
 }
@@ -52,7 +54,7 @@
 		cells={anchor=center},
 		inner xsep=1pt,
 		inner ysep=1pt,
-		nodes={scale=0.8,inner sep=2pt, transform shape},
+		nodes={scale=1,inner sep=2pt, transform shape},
 		draw=none,
 		at={(rel axis cs:1,0.3)},
 		anchor=north east,
@@ -74,37 +76,24 @@ ytick=\empty,
 ylabel={RAS},
 ymin=-1e-3,
 ymax=3.5e-3,
-%=========================== Labels ================================
-% xlabel ={Wavelength (nm)},
-% ylabel ={DRC},
-% every axis y label/.style= {at={(axis description cs:-0.2,0.5)},rotate=90},
-% every y tick scale label/.style={at={(axis description cs:-0.2025,0.58)},
-% 	rotate=90,s
-% 	inner sep=0pt},
-% % cycle list={[colors of colormap={0,300,600,900,12000,14000}]},
-% % cycle list/Spectral
-% colormap/jet,
-% point meta min=0.018,
-% point meta max=0.090,
 ]
 
-%================================= Add Data ===================================
-
-
-%=================================== Plot ======================================
 \addplot[color=Set1-B] table[x index=0,y expr=\thisrow{3}]{\rd};
 \addlegendentry{RAS}
 
-\def\sc{1}
-\lbl{3.2}{2.75e-3}{2e-3}{$E_{1}$}{3}{\sc}{Set1-B}
+\def\sc{0.8}
+\lbl{3.2}{2.75e-3}{2e-3}{$E_{1}$}{3}{\sc}{black}
 
-\lbl{4.0}{2e-3}{1.4e-3}{$E_{1}+\Delta_{1}$}{3}{\sc}{Set1-B}
+\lbl{4.0}{2e-3}{1.4e-3}{$E_{1}+\Delta_{1}$}{3}{\sc}{black}
 
 \dimline[label style = {rotate=-90,midway,xshift=1mm,scale=0.7},
 line style = {line width=0.5pt,arrows={Stealth[scale=1]}-{Stealth[scale=1]}},
 extension end length=0.3,
 extension start length=0.3,
 ] {(axis cs:2.75,0.5e-3)}{(axis cs:2.75,1.5e-3)}{$\mathrm{1\!\times\!10^{-3}}$};
+
+\draw (axis cs:2.0,0)--(axis cs:2.5,0);
+
 \end{axis} 	
 
 \begin{axis}[

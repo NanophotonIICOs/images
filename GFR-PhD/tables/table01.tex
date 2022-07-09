@@ -78,13 +78,13 @@
         \pgfmathsetmacro\x{int(\cc)*2.5};
         \node[anchor=center] (i1) at (\x,1) {\includegraphics[width=2cm,height=3cm]{images/im-\i.jpeg}};
         
-        \node[anchor=north west,fill=blue] at (i1.north west){\color{white} \l) };
+        \node[anchor=north west,fill=black,font=\bfseries,draw,inner sep=0.5mm,text width=0.35cm,align=center] at (i1.north west){\color{white} \l) };
     \fi
 
     \ifnum\numexpr\i>3
         \pgfmathsetmacro\xi{int(\cc-4)*2.5};
         \node[anchor=center] (i1) at (\xi,4.5) {\includegraphics[width=2cm,height=3cm]{images/im-\i.jpeg}};
-        \node[anchor=north west,fill=blue,font=\bfseries] at (i1.north west){\color{white} \l) };
+        \node[anchor=north west,fill=black,font=\bfseries,draw,inner sep=0.5mm,text width=0.35cm,align=center] at (i1.north west){\color{white} \l) };
     \fi
 }
 
